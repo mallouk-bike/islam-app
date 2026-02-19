@@ -1,1488 +1,850 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <meta name="theme-color" content="#059669">
-  <title>🕌 Islamic App PWA</title>
-  <!-- Manifest PWA inline -->
-  <link rel="manifest" href="data:application/manifest+json,{\"name\":\"Islamic PWA App\",\"short_name\":\"IslamicApp\",\"start_url\":\".\",\"display\":\"standalone\",\"background_color\":\"#059669\",\"theme_color\":\"#059669\",\"icons\":[{\"src\":\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle fill='%23059669' cx='32' cy='32' r='32'/%3E%3Cpath d='M15 51 L32 19 L49 51 Z' fill='%23D4AF37' stroke='%231e293b' stroke-width='2'/%3E%3Crect x='26' y='39' width='12' height='12' fill='%23FFFFFF' stroke='%23D4AF37' stroke-width='1' rx='2'/%3E%3Crect x='29.5' y='27' width='5' height='10' fill='%23D4AF37' rx='2'/%3E%3C/svg%3E\",\"sizes\":\"192x192\",\"type\":\"image/svg+xml\"}]}" />
-  <style>
-    /* ----- Palette Couleurs ----- */
-    :root {
-      --green: #059669;
-      --gold: #D4AF37;
-      --white: #FFF;
-      --night: #1e293b;
-      --shadow: 0 2px 8px rgba(30,41,59,0.18);
-      --radius: 18px;
-    }
-    * { box-sizing: border-box; }
-    html, body {
-      height: 100%; margin: 0; padding: 0;
-      font-family: 'Segoe UI', 'Rubik', 'Noto Sans Arabic', Arial, sans-serif;
-      background: linear-gradient(125deg, var(--night) 0%, var(--green) 80%);
-      color: var(--night);
-      scroll-behavior: smooth;
-    }
-    body.rtl {
-      direction: rtl; text-align: right;
-      font-family: 'Segoe UI', 'Noto Kufi Arabic', Arial, sans-serif;
-    }
-    header {
-      background: var(--white);
-      color: var(--green);
-      box-shadow: var(--shadow);
-      border-bottom: 2px solid var(--gold);
-      display: flex;
-      align-items: center;
-      padding: .7rem 1.2rem .7rem 1.2rem;
-      justify-content: space-between;
-      z-index: 10;
-      position: sticky;
-      top: 0;
-    }
-    .logo {
-      display: flex; align-items: center;
-    }
-    .logo-icon {
-      width: 42px; height: 42px; margin-right: 10px; display:inline-block;
-    }
-    .logo-text {
-      font-family: 'Rubik', 'Segoe UI', Arial, sans-serif;
-      font-size: 1.3rem; font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--night);
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    @media (max-width: 480px) {
-      .logo-text { font-size: 1rem; }
-      header { padding: .7rem .4rem; }
-    }
-    /* ----- Navbar ----- */
-    nav {
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255, .98);
-      box-shadow: 0 -2px 12px rgba(30,41,59,0.12);
-      z-index: 100;
-      display: flex; justify-content: space-around;
-      align-items: center;
-      min-height: 64px;
-      border-top: 1.5px solid var(--green);
-      padding-bottom: env(safe-area-inset-bottom, 0);
-      user-select: none;
-    }
-    .nav-btn {
-      background: none; border: none; outline: none;
-      display: flex; flex-direction: column;
-      align-items: center;
-      flex: 1 1 0%;
-      padding: 0.2rem 0;
-      font-size: 1.8rem;
-      transition: color .19s;
-      color: var(--night);
-      min-width: 52px;
-    }
-    .nav-btn.active {
-      color: var(--green);
-    }
-    .nav-label {
-      font-size: .74rem;
-      margin-top: -2px;
-      font-weight: 500;
-    }
-    @media (min-width: 930px) {
-      nav { top: 0; bottom: unset; width: 85vw; max-width: 1200px; margin: 20px auto 0 auto; border-radius: 99em; border-bottom: none; border-top: 3px solid var(--gold); }
-      nav { box-shadow: var(--shadow); }
-      .nav-btn { font-size: 1.5rem; }
-    }
-    /* --- Hamburger Menu for Navbar on mobile portrait --- */
-    .nav-collapse { display: none; }
-    @media (max-width: 640px) {
-      .nav-btn:not(.main) { display:none; }
-      nav.menu-open .nav-btn { display: flex !important; }
-      .nav-collapse {
-        display: block;
-        font-size: 2rem;
-        line-height: 1;
-        color: var(--green);
-        background: none;
-        border: none; margin-left: 18px;
-        cursor: pointer;
-      }
-    }
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f3d2e">
 
-    /* ----- Section/Pages Global ----- */
-    main {
-      padding: 1.7rem 8vw 4.5rem 8vw;
-      max-width: 800px;
-      margin: 0 auto;
-      min-height: 70vh;
-      transition: padding-top .2s;
-    }
-    @media (max-width: 900px) {
-      main { padding: 1.1rem 2vw 5.5rem 2vw; }
-    }
-    @media (max-width: 480px) {
-      main { padding: .6rem .5vw 7.2rem .5vw; }
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islam - Plateforme Complète</title>
 
-    section[aria-hidden="true"] {
-      display: none !important;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-    /* Big Home blocks */
-    .category-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.3rem;
-      margin-top: 2.6rem;
-      justify-content: center;
-    }
-    .category-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1.6rem 1.2rem 1.6rem;
-      min-width: 175px;
-      flex: 1 1 190px;
-      max-width: 235px;
-      text-decoration: none;
-      color: var(--night);
-      position: relative;
-      cursor: pointer;
-      transition: transform .14s, box-shadow .14s;
-      border: 2.5px solid transparent;
-      background-image: linear-gradient(125deg, #fff, #f3f7fb);
-      will-change: transform, box-shadow;
-    }
-    .category-card:hover, .category-card:focus {
-      box-shadow: 0 4px 20px rgba(30,41,59,0.18);
-      border: 2.5px solid var(--green);
-      z-index: 1;
-      transform: translateY(-4px) scale(1.03);
-    }
-    .category-emoji {
-      font-size: 2.7rem; margin-bottom: 1rem;
-      text-shadow:0 1.5px 6px rgba(5,150,105,0.08);
-    }
-    @media (max-width: 480px) {
-      .category-card { min-width: 120px; padding: 1.5rem .75rem 1rem .75rem; }
-      .category-emoji { font-size: 1.8rem; }
-    }
+<style>
+:root{
+--primary:#0f3d2e;
+--gold:#d4af37;
+--bg:#f4f6f5;
+--text:#1a1a1a;
+--card:#ffffff;
+}
 
-    /* ---- Section Titles ---- */
-    h1, h2, h3, h4 { color: var(--green); } 
-    .gradient-title {
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-    }
-    .section-title {
-      font-size: 2.1rem; font-weight: 600; margin-bottom: .2em;
-      margin-top: .5rem; letter-spacing:.0em;
-    }
-    /* ---- Cards/blocks ---- */
-    .block {
-      background: var(--white);
-      padding: 1.25rem 1.1rem .7rem 1.25rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 1.7rem;
-      position: relative;
-      border-left: 5px solid var(--green);
-      transition: box-shadow .17s;
-    }
-    .block:hover { box-shadow:0 5px 16px rgba(30,41,59,0.10); }
-    .multilang-quote {
-      font-size: 1.17rem;
-      margin-bottom: 1.8rem;
-      text-align: center;
-      color: var(--night);
-      font-weight: 600;
-    }
-    .multilang-quote span[lang="ar"] { font-size: 1.2em; font-weight: 700; }
-    .multilang-quote span { display: block; margin-bottom: .65em; }
+body.dark{
+--bg:#0e1a17;
+--text:#f2f2f2;
+--card:#1c2b27;
+}
 
-    /* ---- Lang Selector ---- */
-    .lang-select {
-      display: flex; align-items: center;
-      gap: .5rem;
-    }
-    .lang-btn {
-      background: none; border: none; outline: none;
-      cursor: pointer;
-      font-size: 1.37rem;
-      margin:0 2px 0 0;
-      border-radius: 7px;
-      transition: background .14s;
-    }
-    .lang-btn.active, .lang-btn:focus {
-      background: var(--green);
-      color: var(--white); 
-    }
-    /* ---- Search & Filters ---- */
-    .searchbar {
-      display: flex; gap: .4em;
-      margin-bottom: 1em; margin-top: .6em;
-      align-items: center;
-    }
-    .searchbar input {
-      flex:1; padding: .44em .8em;
-      border: 1.3px solid var(--green);
-      border-radius: 16px;
-      outline: none;
-      font-size:1rem;
-    }
-    .searchbar button {
-      background: var(--green); color: var(--white);
-      border: none; border-radius: 15px; padding: .41em 1em;
-      font-size:.9em; cursor:pointer;
-      font-weight:500;
-      transition: background .15s;
-    }
-    .searchbar button:hover { background: var(--gold); color: var(--night); }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
 
-    /* ---- Coran List ---- */
-    .verse-list {
-      display: flex; flex-direction: column; gap: 1.18rem;
-    }
-    .verse-card {
-      background: var(--white);
-      border-left: 6px solid var(--gold);
-      border-radius: 1em;
-      box-shadow: var(--shadow);
-      padding:1.2em 1.1em .66em 1.1em;
-    }
-    .verse-card h4 {
-      margin: 0 0 .52em 0; color: var(--green); font-size: 1.1em; font-weight: 700;
-    }
-    .verse-card .verse-ar {
-      font-size: 1.17em; direction: rtl; text-align: right;
-      color: var(--night); font-weight: 700;
-    }
-    .verse-card .verse-translate {
-      color:var(--night); margin-top:.3em; font-style: italic;
-    }
-    .verse-card .verse-tafsir {
-      margin-top:0.3em; color: var(--green);
-      font-size:.97em;
-    }
-    /* ---- Prayer times ---- */
-    .prayer-times-table {
-      width: 100%; border-collapse: collapse;
-      margin-top: .2em; margin-bottom:1em;
-    }
-    .prayer-times-table th, .prayer-times-table td {
-      border: none; text-align: left;
-      padding: .62em .4em;
-      font-size:1rem;
-    }
-    .prayer-times-table th {
-      color: var(--green); font-weight:700; font-size:.97em;
-    }
-    .prayer-times-table tr.next {
-      background: linear-gradient(90deg, #dbffe5 0, #fff 100%);
-      font-weight: 700;
-      border-radius: 17px;
-    }
-    .adhan-toggle {
-      display: flex; align-items: center; gap: .6em;
-      margin: .7em 0 1em 0;
-      font-size:1.08em;
-    }
-    .adhan-toggle input {
-      accent-color: var(--green);
-    }
-    .countdown {
-      background: var(--green);
-      color: var(--white);
-      border-radius: 8px;
-      display: inline-block;
-      font-weight: 600;
-      padding: .36em 1.2em;
-      margin-bottom: 1em;
-      font-size: 1.15em;
-      letter-spacing: 1px;
-      box-shadow: 0 1px 8px rgba(5,150,105,.09);
-    }
-    .location-status {
-      font-size: .93em; color: var(--gold);
-      margin-bottom: .32em; margin-top: .13em;
-      display: flex; gap: .4em; align-items: center;
-    }
+body{
+font-family:'Poppins',sans-serif;
+background:var(--bg);
+color:var(--text);
+transition:0.3s;
+}
 
-    /* ---- Azkar ---- */
-    .azkar-category-list {
-      display: flex; gap: .66em; flex-wrap: wrap;
-      margin-bottom: 1em;
-    }
-    .azkar-cat-btn {
-      background: linear-gradient(90deg, var(--green), var(--gold));
-      color: var(--white);
-      border: none;
-      outline: none;
-      border-radius: 13px;
-      padding: .58em 1.3em;
-      margin-right: .18em;
-      font-weight: 500; font-size:.98em;
-      margin-bottom:.26em;
-      box-shadow: var(--shadow);
-      transition: background .19s, color .1s;
-    }
-    .azkar-cat-btn.active {
-      background:var(--gold); color:var(--green);
-      font-weight:700;
-    }
-    .azkar-list {
-      display: flex; flex-direction: column; gap: .96em;
-    }
-    .azkar-box {
-      background: var(--white);
-      border-radius: 13px;
-      box-shadow: var(--shadow);
-      padding: 1.18em .9em .5em .9em;
-      position:relative;
-      font-size:1.09em;
-    }
-    .azkar-box .azkar-ar {
-      font-size:1.1em; font-weight:700;
-      direction: rtl; text-align: right;
-      color:var(--green);
-      line-height:1.8;
-    }
-    .azkar-box .azkar-tr {
-      font-size:.95em; color:var(--night); margin-top:.2em;
-      direction: ltr;
-    }
-    .azkar-box .azkar-tl {
-      color:var(--gold); margin-top:.19em; font-size:.97em; font-style:italic;
-    }
-    .tasbeeh {
-      margin-top: .71em;
-      display: flex; gap:.4em;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .tasbeeh-btn {
-      background: var(--green); color: var(--white); border: none; border-radius:100em;
-      padding: .5em 1.6em; font-size:1em; cursor:pointer; font-weight:600;
-      margin-right:.12em; margin-bottom:.15em;
-      box-shadow: var(--shadow);
-      outline: none;
-    }
-    .tasbeeh-count {
-      background:var(--gold); color: var(--night);
-      font-weight:700; padding:.4em 1.2em;
-      border-radius:2em;
-      margin-left:.5em;
-      font-size:.98em;
-    }
+body[dir="rtl"]{
+font-family:'Cairo',sans-serif;
+text-align:right;
+}
 
-    /* ---- Rappels ---- */
-    .reminder-list { display: flex; flex-direction: column; gap: .85em; }
-    .reminder-card {
-      background: var(--white);
-      padding: .88em 1.13em .62em .97em;
-      border-radius: 13px;
-      box-shadow: var(--shadow);
-      border-left: 5px solid var(--green);
-      font-size: 1.08em;
-      color: var(--night);
-      position: relative;
-      transition: box-shadow .13s;
-    }
-    .reminder-card .remove-reminder-btn {
-      position:absolute; top: .7em; right:.9em;
-      background:none; border:none; color:var(--green);
-      font-size:1.15em; cursor:pointer;
-      transition: color .12s;
-    }
-    .reminder-card .remove-reminder-btn:hover { color:var(--gold); }
-    .add-reminder-form {
-      margin-top:.9em;
-      display: flex; gap:.5em; flex-wrap: wrap;
-    }
-    .add-reminder-form input {
-      flex: 1; padding: .48em 1em;
-      font-size:.99em;
-      border-radius: 11px;
-      border:1.6px solid var(--green);
-      outline:none;
-      margin-bottom:.13em;
-    }
-    .add-reminder-form button {
-      background:var(--gold); color:var(--white);
-      border: none; border-radius: 9px; padding:.51em .92em;
-      font-weight:700; cursor:pointer;font-size:.97em;
-    }
-    .add-reminder-form button:hover { background:var(--green); color:var(--white); }
+header{
+position:fixed;
+width:100%;
+background:var(--primary);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+z-index:1000;
+}
 
-    /* ---- Vidéos ---- */
-    .video-gallery {
-      display: flex; flex-wrap: wrap; gap: 1.15em;
-      margin-top: 1em;
-      justify-content:center;
-    }
-    .video-thumb {
-      background:var(--white); border-radius:12px; box-shadow:var(--shadow);
-      overflow:hidden; width:220px; aspect-ratio: 16/9; position:relative;
-      display:flex; align-items:center; justify-content:center;
-      margin-bottom:.9em;
-    }
-    .video-thumb video, .video-thumb iframe {
-      width: 100%; height: 100%; border:none; background: #000;
-    }
-    .video-thumb .remove-video-btn {
-      position:absolute;top:.33em;right:.7em;z-index:2;
-      background: none; border:none; color:var(--gold); font-size:1.23em; cursor:pointer;
-    }
-    .add-video-form {
-      margin-top: .7em; background: #f9fafb; border-radius:10px; padding:.66em 1em;
-      box-shadow:0 1px 6px rgba(5,150,105,.07);
-      display:flex; flex-wrap:wrap; gap:.41em;
-    }
-    .add-video-form input[type="url"] {
-      flex: 1; min-width:120px; padding: .48em .9em; font-size: 1em;
-      border-radius: 8px; border:1.2px solid var(--green); outline:none;
-    }
-    .add-video-form input[type="file"] {
-      border:none; outline:none;
-    }
-    .add-video-form button {
-      background: var(--green); color:var(--white); border-radius:8px;
-      border:none; font-size:.98em; font-weight:700;
-      padding:.51em 1.07em; cursor:pointer;
-    }
-    #videoAddModeSelector { display:flex; gap:1.2em; font-size:.95em; margin:.6em 0 0 .09em; }
-    .video-add-mode-btn {
-      background: none;
-      border: none;
-      outline:none;
-      font-weight: 700;
-      cursor: pointer;
-      color: var(--green);
-      border-radius:8px;
-      padding: .21em .78em;
-      margin-right:.18em;
-      transition: background .11s;
-    }
-    .video-add-mode-btn.active, .video-add-mode-btn:focus {
-      background: var(--gold); color: var(--white);
-    }
-    /* ---- Qibla Compass ---- */
-    .qibla-compass-container {
-      margin:1.8em auto 0 auto; max-width:350px; text-align:center;
-    }
-    .qibla-canvas-wrap {
-      width:100%; max-width:320px; aspect-ratio:1/1;
-      margin:0 auto 0 auto;
-      background:var(--white);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      position: relative;
-      display:flex; align-items:center; justify-content:center;
-    }
-    #qiblaCanvas { width: 94%; max-width:310px; display:block; margin:0 auto; }
-    .qibla-dir-info {
-      color: var(--gold); margin-top: .39em; font-weight:700;
-      font-size: 1.13em;
-    }
-    @media (max-width:480px) {
-      .qibla-compass-container {max-width:100vw;}
-      .qibla-canvas-wrap{max-width:97vw;}
-    }
-    /* ---- Compte Utilisateur ---- */
-    .user-account-form {
-      background:var(--white); border-radius:13px;
-      box-shadow:var(--shadow); padding:1.3em 1.2em;
-      max-width:420px; margin:1.2em auto 0 auto;
-    }
-    .user-account-form label {
-      display: block; font-weight:600; color:var(--green);
-      margin-bottom: .46em; margin-top:1.15em;
-    }
-    .user-account-form input[type="text"],
-    .user-account-form input[type="password"],
-    .user-account-form input[type="email"] {
-      width:100%; padding:.53em .98em; border-radius:12px;
-      border:1.2px solid var(--green);
-      margin-bottom:.24em; font-size:1rem;
-    }
-    .user-account-form button[type="submit"] {
-      background:var(--gold); color:var(--white);
-      border:none; border-radius:9px; padding:.63em 2em; font-weight:700;
-      font-size:1.12em;margin-top:1.1em; cursor:pointer;
-      box-shadow:0 2px 8px rgba(212,175,55,.06);
-    }
-    .user-account-form button[type="submit"]:hover { background: var(--green);}
-    .account-profile-block {
-      background:linear-gradient(90deg, var(--green), var(--gold));
-      color:var(--white); border-radius:11px;
-      box-shadow:var(--shadow); padding:1.2em 1.1em .8em 1.2em;
-      margin:1.3em auto 0 auto; max-width:370px;
-      text-align:center;
-      display:flex; flex-direction:column; align-items:center;
-      font-size:1.1em;
-    }
-    .logout-btn {
-      margin-top:.8em; background:var(--white); color:var(--green); border:none;
-      border-radius:8px; font-weight:700; font-size:1em;
-      padding:.39em 1.9em; cursor:pointer;box-shadow:var(--shadow);
-      transition:background .15s;
-    }
-    .logout-btn:hover { background:var(--gold); color:var(--white);} 
-    /* ---- Global Responsive ---- */
-    @media (max-width:600px){
-      .section-title { font-size: 1.41rem; }
-      .category-card { min-width: 116px; max-width: 170px; }
-    }
-    ::selection { background:var(--gold); color:var(--white); }
-    .hidden { display: none !important; }
-    /* ------- END CSS ------- */
-  </style>
-  <!-- Service Worker for PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('data:application/javascript;base64,'+
-        btoa(`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',function(e){e.respondWith(caches.open('v1').then(function(c){return c.match(e.request).then(function(r){return r||fetch(e.request).then(function(resp){if(resp.url.startsWith('http')&&e.request.method==='GET')c.put(e.request,resp.clone());return resp;})})}));});`)).catch(()=>{});
-      });
-    }
-  </script>
+.logo{
+color:var(--gold);
+font-weight:700;
+font-size:1.2rem;
+}
+
+nav{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+nav a, nav select{
+color:white;
+background:none;
+border:none;
+font-size:0.8rem;
+cursor:pointer;
+text-decoration:none;
+}
+
+.hamburger{
+display:none;
+font-size:26px;
+color:white;
+cursor:pointer;
+}
+
+section{
+padding:110px 40px;
+min-height:100vh;
+}
+
+.hero{
+background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da') center/cover;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:12px;
+margin-top:20px;
+box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.ayah{
+padding:15px;
+margin:10px 0;
+border-left:4px solid var(--gold);
+background:rgba(0,0,0,0.03);
+border-radius:6px;
+}
+
+body.dark .ayah{
+background:rgba(255,255,255,0.05);
+}
+
+button{
+background:var(--primary);
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+#map{
+height:350px;
+margin-top:20px;
+}
+
+footer{
+background:var(--primary);
+color:white;
+text-align:center;
+padding:20px;
+}
+
+@media(max-width:768px){
+nav{
+position:absolute;
+top:70px;
+right:0;
+flex-direction:column;
+background:var(--primary);
+width:230px;
+padding:20px;
+display:none;
+}
+nav.active{display:flex;}
+.hamburger{display:block;}
+}
+
+
+section{
+opacity:0;
+transform:translateY(40px);
+transition:0.6s;
+}
+
+section.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+#namesList{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+@media(max-width:768px){
+#namesList{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:480px){
+#namesList{
+grid-template-columns:1fr;
+}
+}
+
+.name-card{
+background:var(--card);
+padding:15px;
+border-radius:12px;
+box-shadow:0 6px 15px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+position:relative;
+}
+
+.name-card:hover{
+transform:translateY(-5px);
+box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.number{
+position:absolute;
+top:8px;
+left:10px;
+font-size:0.8rem;
+color:var(--gold);
+font-weight:bold;
+}
+
+body[dir="rtl"] .number{
+left:auto;
+right:10px;
+}
+
+</style>
 </head>
-<body class="">
-  <header>
-    <div class="logo">
-      <!-- SVG Mosquée stylisée -->
-      <span class="logo-icon">
-        <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-          <circle fill="#059669" cx="32" cy="32" r="32"/>
-          <path d="M15 51 L32 19 L49 51 Z" fill="#D4AF37" stroke="#1e293b" stroke-width="2"/>
-          <rect x="26" y="39" width="12" height="12" fill="#FFF" stroke="#D4AF37" stroke-width="1" rx="2"/>
-          <rect x="29.5" y="27" width="5" height="10" fill="#D4AF37" rx="2"/>
-        </svg>
-      </span>
-      <span class="logo-text">Islamic App</span>
-    </div>
-    <div class="lang-select" tabindex="0">
-      <button class="lang-btn" data-lang="fr" title="Français" aria-label="Français">🇫🇷</button>
-      <button class="lang-btn" data-lang="en" title="English" aria-label="English">🇬🇧</button>
-      <button class="lang-btn" data-lang="ar" title="العربية" aria-label="العربية">🇲🇦</button>
-    </div>
-  </header>
-  <main>
-    <!-- Home Section (SPA) -->
-    <section id="page-home" class="spa-page" aria-hidden="false">
-      <div class="multilang-quote" id="welcome-quote">
-        <span lang="fr">As-salam aleykoum, bienvenue dans votre app islamique</span>
-        <span lang="en">As-salam alaykum, welcome to your Islamic app</span>
-        <span lang="ar">السلام عليكم، مرحباً بك في تطبيقك الإسلامي</span>
-      </div>
-      <div class="category-grid">
-        <a class="category-card" data-nav="quran">
-          <span class="category-emoji">📖</span>
-          <span class="category-label" data-t="home.quran">Coran</span>
-        </a>
-        <a class="category-card" data-nav="prayer">
-          <span class="category-emoji">🕌</span>
-          <span class="category-label" data-t="home.prayer">Horaires de prières</span>
-        </a>
-        <a class="category-card" data-nav="azkar">
-          <span class="category-emoji">💬</span>
-          <span class="category-label" data-t="home.azkar">Azkar</span>
-        </a>
-        <a class="category-card" data-nav="reminders">
-          <span class="category-emoji">🔔</span>
-          <span class="category-label" data-t="home.reminders">Rappels islamiques</span>
-        </a>
-        <a class="category-card" data-nav="videos">
-          <span class="category-emoji">🎥</span>
-          <span class="category-label" data-t="home.videos">Vidéos</span>
-        </a>
-        <a class="category-card" data-nav="qibla">
-          <span class="category-emoji">🧭</span>
-          <span class="category-label" data-t="home.qibla">Qibla</span>
-        </a>
-        <a class="category-card" data-nav="account">
-          <span class="category-emoji">👤</span>
-          <span class="category-label" data-t="home.account">Compte utilisateur</span>
-        </a>
-      </div>
-    </section>
-    <!-- Coran section -->
-    <section id="page-quran" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="quran.title">📖 Versets importants du Coran</h2>
-      <form class="searchbar" id="quranSearchForm" autocomplete="off" onsubmit="return false">
-        <input type="text" id="quranSearch" placeholder="Recherche..." data-t-ph="quran.search"/>
-        <button type="submit" data-t="quran.searchBtn">Rechercher</button>
-      </form>
-      <div id="quranVerses" class="verse-list"></div>
-      <div style="margin-top:2em;">
-        <button class="azkar-cat-btn" id="mockAddQuranBtn" data-t="quran.addVerse">Ajouter un verset (admin)</button>
-      </div>
-    </section>
-    <!-- Horaires Prières section -->
-    <section id="page-prayer" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="prayer.title">🕌 Horaires de prières</h2>
-      <div class="location-status" id="prayerLocationStatus"></div>
-      <div class="adhan-toggle">
-        <input type="checkbox" id="adhanAudioToggle">
-        <label for="adhanAudioToggle" id="adhanAudioLabel" data-t="prayer.adhanAudio">Activer Adhan à la prochaine prière</label>
-      </div>
-      <div class="countdown" id="prayerCountdown"></div>
-      <table class="prayer-times-table" id="prayerTimesTable"></table>
-      <section style="margin-top:1.5em;" id="prayerMonthlyContainer">
-        <h4 class="gradient-title" data-t="prayer.monthly">Calendrier mensuel</h4>
-        <table class="prayer-times-table" id="prayerMonthlyTable"></table>
-      </section>
-      <audio id="adhanAudio" src="https://cdn.islamic.network/adhan/audio/adhan-makkah.mp3" preload="auto"></audio>
-    </section>
-    <!-- Azkar section -->
-    <section id="page-azkar" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="azkar.title">💬 Azkar et invocations</h2>
-      <div class="azkar-category-list" id="azkarCategoryList"></div>
-      <div class="azkar-list" id="azkarList"></div>
-    </section>
-    <!-- Rappels -->
-    <section id="page-reminders" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="reminders.title">🔔 Rappels et citations islamiques</h2>
-      <div class="reminder-list" id="remindersList"></div>
-      <form class="add-reminder-form" id="addReminderForm" autocomplete="off" onsubmit="return false;">
-        <input type="text" id="reminderInput" placeholder="Ajouter un rappel..." data-t-ph="reminders.addPh"/>
-        <button type="submit" data-t="reminders.addBtn">Ajouter</button>
-      </form>
-    </section>
-    <!-- Vidéos -->
-    <section id="page-videos" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="videos.title">🎥 Galerie Vidéos</h2>
-      <div id="videoAddModeSelector">
-        <button class="video-add-mode-btn active" data-mode="youtube" type="button">YouTube</button>
-        <button class="video-add-mode-btn" data-mode="local" type="button">Local</button>
-      </div>
-      <form id="addVideoForm" class="add-video-form" autocomplete="off" onsubmit="return false;">
-        <input type="url" id="videoUrlInput" placeholder="Lien YouTube" required data-t-ph="videos.urlPh">
-        <input type="file" id="videoFileInput" accept="video/*" style="display:none">
-        <button type="submit" data-t="videos.addBtn">Ajouter</button>
-      </form>
-      <div class="video-gallery" id="videoGallery"></div>
-    </section>
-    <!-- Qibla (boussole) -->
-    <section id="page-qibla" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="qibla.title">🧭 Direction Qibla</h2>
-      <div class="qibla-compass-container">
-        <div class="qibla-canvas-wrap">
-          <canvas id="qiblaCanvas" width="310" height="310"></canvas>
-        </div>
-        <div class="qibla-dir-info" id="qiblaDirectionInfo"></div>
-      </div>
-    </section>
-    <!-- Compte utilisateur -->
-    <section id="page-account" class="spa-page" aria-hidden="true">
-      <h2 class="section-title gradient-title" data-t="account.title">👤 Compte utilisateur</h2>
-      <div id="accountContainer"></div>
-    </section>
-  </main>
 
-  <!-- Navbar (fixed) -->
-  <nav id="mainNavbar">
-    <button class="nav-btn main active" data-nav="home" tabindex="0" aria-label="Accueil"><span>🏠</span> <span class="nav-label" data-t="nav.home">Accueil</span></button>
-    <button class="nav-btn" data-nav="quran" tabindex="0"><span>📖</span> <span class="nav-label" data-t="nav.quran">Coran</span></button>
-    <button class="nav-btn" data-nav="prayer" tabindex="0"><span>🕌</span> <span class="nav-label" data-t="nav.prayer">Prières</span></button>
-    <button class="nav-btn" data-nav="azkar" tabindex="0"><span>💬</span> <span class="nav-label" data-t="nav.azkar">Azkar</span></button>
-    <button class="nav-btn" data-nav="reminders" tabindex="0"><span>🔔</span> <span class="nav-label" data-t="nav.reminders">Rappels</span></button>
-    <button class="nav-btn" data-nav="videos" tabindex="0"><span>🎥</span> <span class="nav-label" data-t="nav.videos">Vidéos</span></button>
-    <button class="nav-btn" data-nav="qibla" tabindex="0"><span>🧭</span> <span class="nav-label" data-t="nav.qibla">Qibla</span></button>
-    <button class="nav-btn" data-nav="account" tabindex="0"><span>👤</span> <span class="nav-label" data-t="nav.account">Compte</span></button>
-    <button class="nav-collapse" id="navHamburger" aria-label="Menu principal"><span>☰</span></button>
-  </nav>
+<body>
 
-  <!-- ===== App JavaScript ===== -->
-  <script>
-  // --- Commentaires en français pour modification facile ---
-  /*******************
-   *         API mock, données locales & consts
-   *******************/
-  const SUPPORTED_LANGS = ['fr','en','ar'];
-  // Traductions UI
-  const translations = {
-    fr: {
-      'home.quran': 'Coran',
-      'home.prayer': 'Horaires de prières',
-      'home.azkar': 'Azkar',
-      'home.reminders': 'Rappels islamiques',
-      'home.videos': 'Vidéos',
-      'home.qibla': 'Qibla',
-      'home.account': 'Compte utilisateur',
-      'quran.title': '📖 Versets importants du Coran',
-      'quran.search': 'Recherche...',
-      'quran.searchBtn': 'Rechercher',
-      'quran.addVerse': 'Ajouter un verset (admin)',
-      'prayer.title': '🕌 Horaires de prières',
-      'prayer.adhanAudio': 'Activer Adhan à la prochaine prière',
-      'prayer.monthly': 'Calendrier mensuel',
-      'azkar.title': '💬 Azkar et invocations',
-      'azkar.morning': 'Matin',
-      'azkar.evening': 'Soir',
-      'azkar.postprayer': 'Après la prière',
-      'azkar.sleep': 'Avant de dormir',
-      'azkar.general': 'Généraux',
-      'azkar.category': 'Catégorie',
-      'reminders.title': '🔔 Rappels et citations islamiques',
-      'reminders.addPh': 'Ajouter un rappel...',
-      'reminders.addBtn': 'Ajouter',
-      'videos.title': '🎥 Galerie Vidéos',
-      'videos.urlPh': 'Lien YouTube',
-      'videos.addBtn': 'Ajouter',
-      'qibla.title': '🧭 Direction Qibla',
-      'account.title': '👤 Compte utilisateur',
-      'account.login': 'Se connecter',
-      'account.signup': 'Créer un compte',
-      'account.email': 'Email',
-      'account.pwd': 'Mot de passe',
-      'account.name': 'Nom complet',
-      'account.submit': 'Valider',
-      'account.profil': 'Profil utilisateur',
-      'account.logout': 'Déconnexion',
-      // Navbar
-      'nav.home': 'Accueil',
-      'nav.quran': 'Coran',
-      'nav.prayer': 'Prières',
-      'nav.azkar': 'Azkar',
-      'nav.reminders': 'Rappels',
-      'nav.videos': 'Vidéos',
-      'nav.qibla': 'Qibla',
-      'nav.account': 'Compte',
-      // General/common
-      'loading': 'Chargement...'
-    }, en: {
-      'home.quran': 'Quran',
-      'home.prayer': 'Prayer Times',
-      'home.azkar': 'Azkar',
-      'home.reminders': 'Islamic Reminders',
-      'home.videos': 'Videos',
-      'home.qibla': 'Qibla',
-      'home.account': 'User Account',
-      'quran.title': '📖 Important Quran Verses',
-      'quran.search': 'Search...',
-      'quran.searchBtn': 'Search',
-      'quran.addVerse': 'Add a verse (admin)',
-      'prayer.title': '🕌 Prayer Times',
-      'prayer.adhanAudio': 'Enable Adhan at next prayer',
-      'prayer.monthly': 'Monthly Calendar',
-      'azkar.title': '💬 Azkar and Invocations',
-      'azkar.morning': 'Morning',
-      'azkar.evening': 'Evening',
-      'azkar.postprayer': 'After Prayer',
-      'azkar.sleep': 'Before Sleep',
-      'azkar.general': 'General',
-      'azkar.category': 'Category',
-      'reminders.title': '🔔 Islamic Reminders & Quotes',
-      'reminders.addPh': 'Add a reminder...',
-      'reminders.addBtn': 'Add',
-      'videos.title': '🎥 Video Gallery',
-      'videos.urlPh': 'YouTube Link',
-      'videos.addBtn': 'Add',
-      'qibla.title': '🧭 Qibla Direction',
-      'account.title': '👤 User Account',
-      'account.login': 'Login',
-      'account.signup': 'Sign Up',
-      'account.email': 'Email',
-      'account.pwd': 'Password',
-      'account.name': 'Full Name',
-      'account.submit': 'Submit',
-      'account.profil': 'User Profile',
-      'account.logout': 'Logout',
-      'nav.home': 'Home',
-      'nav.quran': 'Quran',
-      'nav.prayer': 'Prayer',
-      'nav.azkar': 'Azkar',
-      'nav.reminders': 'Reminders',
-      'nav.videos': 'Videos',
-      'nav.qibla': 'Qibla',
-      'nav.account': 'Account',
-      'loading': 'Loading...'
-    }, ar: {
-      'home.quran': 'القرآن',
-      'home.prayer': 'مواقيت الصلاة',
-      'home.azkar': 'أذكار',
-      'home.reminders': 'تذكيرات إسلامية',
-      'home.videos': 'فيديوهات',
-      'home.qibla': 'القبلة',
-      'home.account': 'حساب المستخدم',
-      'quran.title': '📖 آيات هامة من القرآن الكريم',
-      'quran.search': 'بحث...',
-      'quran.searchBtn': 'بحث',
-      'quran.addVerse': 'إضافة آية (تجريبية)',
-      'prayer.title': '🕌 مواقيت الصلاة',
-      'prayer.adhanAudio': 'تشغيل الأذان عند موعد الصلاة',
-      'prayer.monthly': 'التقويم الشهري',
-      'azkar.title': '💬 أذكار وأدعية',
-      'azkar.morning': 'الصباح',
-      'azkar.evening': 'المساء',
-      'azkar.postprayer': 'بعد الصلاة',
-      'azkar.sleep': 'قبل النوم',
-      'azkar.general': 'عام',
-      'azkar.category': 'الفئة',
-      'reminders.title': '🔔 تذكيرات وأقوال إسلامية',
-      'reminders.addPh': 'أضف تذكيرًا...',
-      'reminders.addBtn': 'إضافة',
-      'videos.title': '🎥 معرض الفيديو',
-      'videos.urlPh': 'رابط يوتيوب',
-      'videos.addBtn': 'إضافة',
-      'qibla.title': '🧭 اتجاه القبلة',
-      'account.title': '👤 حساب المستخدم',
-      'account.login': 'تسجيل الدخول',
-      'account.signup': 'إنشاء حساب',
-      'account.email': 'البريد الإلكتروني',
-      'account.pwd': 'كلمة المرور',
-      'account.name': 'الاسم الكامل',
-      'account.submit': 'إرسال',
-      'account.profil': 'الملف الشخصي',
-      'account.logout': 'تسجيل الخروج',
-      'nav.home': 'الرئيسية',
-      'nav.quran': 'القرآن',
-      'nav.prayer': 'الصلاة',
-      'nav.azkar': 'أذكار',
-      'nav.reminders': 'تذكيرات',
-      'nav.videos': 'فيديوهات',
-      'nav.qibla': 'القبلة',
-      'nav.account': 'الحساب',
-      'loading': 'جاري التحميل...'
-    }
-  };
-  // Versets Coran mock (démo)
-  let demoQuranVerses = [
-    {
-      surah: 'Al-Fatiha',
-      ayah: 1,
-      ar: 'بِسْمِ اللّٰهِ الرَّحْمَنِ الرَّحِيمِ',
-      fr: 'Au nom d’Allah, le Tout Miséricordieux, le Très Miséricordieux.',
-      en: 'In the name of Allah, the Entirely Merciful, the Especially Merciful.',
-      tafsir: {
-        fr: 'Ceci est l’ouverture de chaque sourate, elle exprime la miséricorde divine.',
-        en: 'This is the opening of every surah, expressing Divine mercy.',
-        ar: 'هذه افتتاحية كل سورة وتدل على رحمة الله.'
-      }
-    },
-    {
-      surah: 'Al-Baqara',
-      ayah: 255,
-      ar: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ',
-      fr: 'Allah ! Point de divinité à part Lui, le Vivant, Celui qui subsiste par Lui-même.',
-      en: 'Allah! There is no deity except Him, the Ever-Living, the Sustainer of (all) existence.',
-      tafsir: {
-        fr: 'Connu comme Ayat Al-Kursi, décrit la souveraineté d’Allah.',
-        en: 'Known as Ayat al-Kursi, describes Allah’s sovereignty.',
-        ar: 'آية الكرسي تشير إلى عظمة الله وسيادته.'
-      }
-    },
-    {
-      surah: 'Al-Ikhlas',
-      ayah: 1,
-      ar: 'قُلْ هُوَ اللَّهُ أَحَدٌ',
-      fr: 'Dis : Il est Allah, Unique.',
-      en: 'Say: He is Allah, [Who is] One.',
-      tafsir: {
-        fr: 'Affirme l’unicité absolue d’Allah.',
-        en: 'Affirms Allah’s complete Oneness.',
-        ar: 'دليل توحيد الله الخالص.'
-      }
-    }
-  ];
-  // Azkar mock demo
-  const azkarData = {
-    morning: [
-      { ar: 'اللهم بك أصبحنا و بك أمسينا', tl: 'Allahumma bika asbahna...', fr:'Ô Allah c’est par Toi que nous sommes au matin...', en:"O Allah, by You we enter the morning...", count:3 },
-      { ar:'رضيت بالله ربا', tl:'Radheetu billahi Rabba...', fr:"J’agrée Allah comme Seigneur...", en:'I am pleased with Allah as my Lord...', count:1 }
-    ],
-    evening: [
-      { ar:'اللهم إني أمسيت أشهدك', tl:'Allahumma inni amsaytu...', fr:'Ô Allah, en cette soirée je Te rends témoin...', en:'O Allah, this evening I bear witness...', count:1 }
-    ],
-    postprayer: [
-      { ar: 'أستغفر الله', tl: 'Astaghfirullah', fr: 'Je demande pardon à Allah', en: 'I seek forgiveness from Allah', count:3 }
-    ],
-    sleep: [
-      { ar: 'باسمك اللهم أموت و أحيا', tl: 'Bismika Allahumma amutu wa ahya', fr:'C’est en Ton nom, O Allah, que je meurs et vis.', en:'In Your name, O Allah, I die and live.', count:1 }
-    ],
-    general: [
-      { ar:'سبحان الله', tl:'Subhanallah', fr:'Gloire à Allah', en:'Glory be to Allah', count:33 }
-    ]
-  };
-  // Rappels mock
-  let demoReminders = [
-    { fr:'Prie comme si c’était ta dernière prière !', en:'Pray as if it is your last prayer!', ar:'صلِّ كأنها آخر صلاة!' },
-    { fr:'Le croyant n’abandonne jamais l’espoir en la miséricorde d’Allah.', en:'The believer never loses hope in Allah’s mercy.', ar:'المؤمن لا ييأس من رحمة الله.' }
-  ];
-  // Videos mock
-  let demoVideos = [
-    {type:'youtube', url:'https://www.youtube.com/embed/7d16CpWp-ok'},
-    {type:'youtube', url:'https://www.youtube.com/embed/Ek11mZ9psag'}
-  ];
-  // Account mock
-  let currentUser = null;
+<header>
+<div class="logo">Islam</div>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+<nav id="nav">
+<a href="#accueil" data-i18n="nav_home"></a>
+<a href="#presentation" data-i18n="nav_presentation"></a>
+<a href="#azkar" data-i18n="nav_azkar"></a>
+<a href="#versets" data-i18n="nav_versets"></a>
+<a href="#priere" data-i18n="nav_prayer"></a>
+<a href="#coran" data-i18n="nav_quran"></a>
+<a href="#noms" data-i18n="nav_names"></a>
+<a href="#tasbih" data-i18n="nav_tasbih"></a>
+<a href="#mosquees" data-i18n="nav_mosque"></a>
+<a href="#membre" data-i18n="nav_member"></a>
 
-  /*******************
-   *      Navigation SPA
-   *******************/
-  const MAIN_SECTIONS = ['home','quran','prayer','azkar','reminders','videos','qibla','account'];
-  function showSection(id) {
-    MAIN_SECTIONS.forEach(nav => {
-      const el = document.getElementById('page-'+nav);
-      if (el) el.setAttribute('aria-hidden', nav !== id);
-    });
-    // Active navbar
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      if (btn.dataset.nav == id) btn.classList.add('active');
-      else btn.classList.remove('active');
-    });
-    // RTL/LTR gestion
-    if (appLang=='ar') document.body.classList.add('rtl');
-    else document.body.classList.remove('rtl');
-    // Mettre à jour URL hash
-    history.replaceState(null, '', '#'+id);
-  }
+<select onchange="changeLanguage(this.value)">
+<option value="fr">FR</option>
+<option value="en">EN</option>
+<option value="ar">AR</option>
+</select>
 
-  // Navbar / SPA Routing
-  document.getElementById('mainNavbar').addEventListener('click', function(e) {
-    if (e.target.closest('.nav-btn')) {
-      e.preventDefault();
-      const nav = e.target.closest('.nav-btn').dataset.nav;
-      if(MAIN_SECTIONS.includes(nav)) showSection(nav);
-    }
-    if (e.target.closest('#navHamburger')) {
-      this.classList.toggle('menu-open');
-    }
-  });
-  document.querySelectorAll('.category-card').forEach(card => {
-    card.addEventListener('click', () => showSection(card.dataset.nav));
-  });
+<a onclick="toggleDark()">🌙</a>
+</nav>
+</header>
 
-  function handleHash() {
-    const section = (location.hash||'#home').replace('#','');
-    showSection(MAIN_SECTIONS.includes(section) ? section : 'home');
-  }
-  window.addEventListener('hashchange', handleHash);
+<section id="accueil" class="hero">
+<h1 data-i18n="hero_title"></h1>
+<p data-i18n="hero_sub"></p>
+</section>
 
-  /********************
-   *      Multilingue
-   *******************/
-  // Lang init avec LocalStorage
-  let appLang = localStorage.getItem('lang') || 'fr';
-  function setLang(lang) {
-    if(!SUPPORTED_LANGS.includes(lang)) lang = 'fr';
-    appLang = lang;
-    localStorage.setItem('lang', lang);
-    // Update lang UI
-    document.documentElement.lang = lang;
-    document.body.lang = lang;
-    // Direction RTL pour arabe
-    if(lang==='ar') {
-      document.documentElement.dir = 'rtl';
-      document.body.classList.add('rtl');
-    } else {
-      document.documentElement.dir = 'ltr';
-      document.body.classList.remove('rtl');
-    }
-    // Update UI texts
-    applyTranslations();
-    // Recharger sections (azkar etc.)
-    renderQuranVerses();
-    renderAzkar();
-    renderReminders();
-    renderAccount();
-    updateWelcomeQuote();
-    renderNavbarLabels();
-  }
-  // Lang buttons
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click',()=>setLang(btn.dataset.lang));
-  });
-  function updateLangBtnActives() {
-    document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.lang===appLang));
-  }
-  function t(key) {
-    return (translations[appLang] && (translations[appLang][key])) ||
-      (translations['fr'][key]||key);
-  }
-  // Traduire dynamiquement l'UI
-  function applyTranslations() {
-    document.querySelectorAll('[data-t]').forEach(el => {
-      el.innerText = t(el.getAttribute('data-t'));
-    });
-    document.querySelectorAll('[data-t-ph]').forEach(el => {
-      el.setAttribute('placeholder', t(el.getAttribute('data-t-ph')));
-    });
-    updateLangBtnActives();
-  }
-  function updateWelcomeQuote() {
-    document.getElementById('welcome-quote').querySelectorAll('span').forEach(span => {
-      span.style.display = (span.getAttribute('lang')===appLang) ? 'block' : 'none';
-    });
-  }
-  /*******************
-   *         CORAN SECTION
-   *******************/
-  // Recherche et affichage versets
-  function renderQuranVerses() {
-    const kw = (document.getElementById('quranSearch').value || '').trim().toLowerCase();
-    let verses = demoQuranVerses.slice();
-    if(kw) {
-      verses = verses.filter(v => (v.ar+v.fr+v.en).toLowerCase().includes(kw));
-    }
-    document.getElementById('quranVerses').innerHTML = verses.map(verse => `
-      <div class="verse-card">
-        <h4>${verse.surah} ${verse.ayah ? ' - '+verse.ayah : ''}</h4>
-        <div class="verse-ar">${verse.ar}</div>
-        <div class="verse-translate">${verse[appLang]}</div>
-        <div class="verse-tafsir">${verse.tafsir[appLang]}</div>
-      </div>
-    `).join('') || '<div>'+t('loading')+'</div>';
-  }
-  document.getElementById('quranSearchForm').addEventListener('submit',renderQuranVerses);
-  document.getElementById('quranSearch').addEventListener('input', function(){ if(this.value.length==0) renderQuranVerses(); });
-  document.getElementById('mockAddQuranBtn').addEventListener('click', ()=>{
-    alert("[ADMIN DEMO] Ajouter un verset : cette fonctionnalité nécessite une base de données. Placeholder, future API.");
-  });
+<section id="presentation">
+<h2 data-i18n="presentation_title"></h2>
+<div class="card">
+<p data-i18n="presentation_text"></p>
+</div>
+</section>
 
-  /********************
-   *   PRAYER TIMES SECTION
-   ********************/
-  // API http://api.aladhan.com/v1/timings
-  function getPrayerTimesForToday(pos, cb){
-    fetch(`https://api.aladhan.com/v1/timings?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&method=2&school=0`)
-      .then(res=>res.json()).then(json=>cb(json.data,null)).catch(e=>cb(null,e));
-  }
-  function getPrayerMonth(pos, month, year, cb){
-    fetch(`https://api.aladhan.com/v1/calendar?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&method=2&month=${month}&year=${year}&school=0`)
-      .then(res=>res.json()).then(json=>cb(json.data,null)).catch(e=>cb(null,e));
-  }
-  function renderPrayerTimesSection(){
-    // Affichage du status de localisation
-    setPrayerLocationStatus(t('loading'), true);
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        getPrayerTimesForToday(pos, (data,err) => {
-          if (err||!data) {setPrayerLocationStatus('Erreur API',true);return;}
-          renderPrayerTimes(data.timings);
-          setPrayerLocationStatus(`${data.meta.timezone}, [${Math.round(pos.coords.latitude*100)/100}, ${Math.round(pos.coords.longitude*100)/100}]`,false);
-          // Mois
-          getPrayerMonth(pos, (new Date()).getMonth()+1, (new Date()).getFullYear(),(arr,err)=>{
-            if (arr) renderPrayerMonthTable(arr);
-          });
-        });
-      }, err => setPrayerLocationStatus('⛔️ Localisation refusée',true), {enableHighAccuracy:true});
-    } else {
-      setPrayerLocationStatus('⛔️ Localisation non supportée',true);
-    }
-  }
-  function setPrayerLocationStatus(txt, warn){
-    let el = document.getElementById('prayerLocationStatus');
-    el.innerHTML = (warn?'<span>⚠️</span>':'<span>📍</span>')+txt;
-    el.style.color = warn ? 'var(--gold)': 'var(--green)';
-  }
-  // Affichage horaires + countdown + adhan
-  let prayerNextInfo = null, adhanTimer = null;
-  function renderPrayerTimes(prayerTimes){
-    // Clefs d'affichage
-    const order = ['Fajr','Dhuhr','Asr','Maghrib','Isha'];
-    let html = `<tr><th>Nom</th><th>Heure</th></tr>`;
-    let now = new Date(), minDiff=99999999, nextName='', nextTime='';
-    order.forEach(k => {
-      let t = prayerTimes[k],
-        timeParts = t.split(':'),
-        d = new Date(now.getFullYear(),now.getMonth(),now.getDate(),parseInt(timeParts[0]),parseInt(timeParts[1]));
-      let diff = (d - now)/1000;
-      if (diff>0 && diff < minDiff) { minDiff=diff; nextName=k; nextTime=t; }
-      html += `<tr class="${diff === minDiff ? 'next':''}"><td>` + 
-        {Fajr:'Fajr',Dhuhr:'Dhuhr',Asr:'Asr',Maghrib:'Maghrib',Isha:'Isha'}[k] +
-        `</td><td>${t}</td></tr>`;
-    });
-    document.getElementById('prayerTimesTable').innerHTML = html;
-    // Countdown jusqu'à la prochaine
-    if (nextName) {
-      let name = {
-        Fajr: (appLang==='ar'?'الفجر': (appLang==='en'?'Fajr':'Fajr')),
-        Dhuhr: (appLang==='ar'?'الظهر': (appLang==='en'?'Dhuhr':'Dohr')),
-        Asr: (appLang==='ar'?'العصر': (appLang==='en'?'Asr':'Asr')),
-        Maghrib: (appLang==='ar'?'المغرب': (appLang==='en'?'Maghrib':'Maghreb')),
-        Isha: (appLang==='ar'?'العشاء': (appLang==='en'?'Isha':'Icha')),
-      }[nextName];
-      updatePrayerCountdown(((new Date(now.getFullYear(),now.getMonth(),now.getDate(),...nextTime.split(':').map(Number)).getTime()-now.getTime())/1000), name);
-    }
-  }
-  // Countdown (interval)
-  function updatePrayerCountdown(seconds, name){
-    clearInterval(adhanTimer);
-    function tick() {
-      if (seconds<=0) {
-        document.getElementById('prayerCountdown').innerText = `${name}: ${t('loading')}`;
-        // Adhan!
-        if(document.getElementById('adhanAudioToggle').checked){
-          document.getElementById('adhanAudio').play().catch(()=>{});
-          window.setTimeout(()=>{},9000);
-        }
-        renderPrayerTimesSection();
-        return;
-      }
-      let h = Math.floor(seconds/3600), m = Math.floor((seconds%3600)/60), s = Math.floor(seconds%60);
-      document.getElementById('prayerCountdown').innerText = `${name}: ${h}h ${m}m ${s}s`;
-      seconds--;
-    }
-    adhanTimer = setInterval(tick, 1000); tick();
-  }
-  function renderPrayerMonthTable(monthArr){
-    let html = `<tr><th>Jour</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th></tr>`;
-    let dt = new Date();
-    monthArr.slice(0,Math.max(28,dt.getDate()+2)).forEach((it,i) => {
-      html += `<tr${i+1===dt.getDate()?' style="font-weight: 700; background: #e1f8eb;"':''}><td>${i+1}</td><td>${it.timings.Fajr.substr(0,5)}</td><td>${it.timings.Dhuhr.substr(0,5)}</td><td>${it.timings.Asr.substr(0,5)}</td><td>${it.timings.Maghrib.substr(0,5)}</td><td>${it.timings.Isha.substr(0,5)}</td></tr>`;
-    });
-    document.getElementById('prayerMonthlyTable').innerHTML = html;
-  }
-  document.getElementById('adhanAudioToggle').addEventListener('change', function(){
-    localStorage.setItem('adhan_enabled', this.checked?'1':'0');
-  });
-  // Au chargement, préférences
-  (function(){
-    document.getElementById('adhanAudioToggle').checked = localStorage.getItem('adhan_enabled')=='1';
-  })();
+<section id="azkar">
+<h2 data-i18n="azkar_title"></h2>
+<div class="card">
+<p>SubhanAllah (33x)</p>
+<p>Alhamdulillah (33x)</p>
+<p>Allahu Akbar (34x)</p>
+</div>
+</section>
 
-  /********************
-   *      AZKAR SECTION
-   ********************/
-  let azkarCurrentCat = 'morning';
-  function renderAzkar(){
-    // Rendre les catégories
-    let cats = Object.keys(azkarData);
-    document.getElementById('azkarCategoryList').innerHTML = cats.map(c=>`<button type="button" class="azkar-cat-btn${(c==azkarCurrentCat?' active':'')}" data-cat="${c}">${t('azkar.'+c) || c}</button>`).join('');
-    // Render les azkar de la catégorie
-    let list = azkarData[azkarCurrentCat]||[], html = '';
-    list.forEach((az,index) => {
-      html+= `<div class="azkar-box">
-        <div class="azkar-ar">${az.ar}</div>
-        <div class="azkar-tr">${az.tl}</div>
-        <div class="azkar-tl">${az[appLang]}</div>
-        <div class="tasbeeh">
-          <button type="button" class="tasbeeh-btn" data-index="${index}">Tasbeeh 🔄</button>
-          <span class="tasbeeh-count" id="tk_${index}">${az.count}</span>
-        </div>
-      </div>`;
-    });
-    document.getElementById('azkarList').innerHTML = html;
-  }
-  document.getElementById('azkarCategoryList').addEventListener('click', function(e){
-    if(e.target.classList.contains('azkar-cat-btn')){
-      azkarCurrentCat = e.target.dataset.cat;
-      renderAzkar();
-    }
-  });
-  document.getElementById('azkarList').addEventListener('click', function(e){
-    if(e.target.classList.contains('tasbeeh-btn')){
-      let idx = parseInt(e.target.dataset.index,10);
-      let el = document.getElementById('tk_'+idx);
-      let n = parseInt(el.innerText)||0;
-      if(n>1) el.innerText = n-1;
-      else el.innerText = 0;
-    }
-  });
+<section id="versets">
+<h2 data-i18n="verset_title"></h2>
+<div class="card">
+<p><strong>Ayat Al-Kursi (2:255)</strong></p>
+<p data-i18n="verset_text"></p>
+</div>
+</section>
 
-  /********************
-   *    RAPPELS SECTION
-   ********************/
-  function renderReminders() {
-    let list = (JSON.parse(localStorage.getItem('reminders_list')||'null') || demoReminders);
-    document.getElementById('remindersList').innerHTML = list.map((r,i)=>
-      `<div class="reminder-card">
-        <span>${r[appLang]||r.fr}</span>
-        <button type="button" class="remove-reminder-btn" data-index="${i}" title="Remove">✖️</button>
-      </div>`).join('');
-  }
-  document.getElementById('addReminderForm').addEventListener('submit', function(){
-    let v = document.getElementById('reminderInput').value.trim();
-    if(v.length < 3) return;
-    let list = (JSON.parse(localStorage.getItem('reminders_list')||'null') || demoReminders);
-    let obj = {fr:v,en:v,ar:v};
-    list.push(obj);
-    localStorage.setItem('reminders_list',JSON.stringify(list));
-    document.getElementById('reminderInput').value = '';
-    renderReminders();
-    setTimeout(()=>alert('[Mock] Rappel ajouté (stocké localement)'),150);
-  });
-  document.getElementById('remindersList').addEventListener('click', function(e){
-    if(e.target.classList.contains('remove-reminder-btn')){
-      let idx = +e.target.dataset.index;
-      let list = (JSON.parse(localStorage.getItem('reminders_list')||'null') || demoReminders);
-      list.splice(idx,1);
-      localStorage.setItem('reminders_list',JSON.stringify(list));
-      renderReminders();
-      setTimeout(()=>alert('[Mock] Rappel supprimé !'),100);
-    }
-  });
+<section id="priere">
+<h2 data-i18n="prayer_title"></h2>
+<div class="card">
+<button onclick="getPrayerTimes()" data-i18n="prayer_button"></button>
+<div id="prayerTimes"></div>
+</div>
+</section>
 
-  /********************
-   *      VIDEOS SECTION
-   ********************/
-  let videoAddMode = 'youtube';
-  function renderVideos(){
-    let list = JSON.parse(localStorage.getItem('video_gallery')||'null')||demoVideos;
-    document.getElementById('videoGallery').innerHTML = list.map((vid,i)=>{
-      if(vid.type==='youtube'){
-        return `<div class="video-thumb"><iframe src="${vid.url}" allowfullscreen title="Vidéo YouTube"></iframe><button class="remove-video-btn" data-index="${i}">✖️</button></div>`
-      }else{
-        return `<div class="video-thumb"><video src="${vid.url}" controls></video><button class="remove-video-btn" data-index="${i}">✖️</button></div>`
-      }
-    }).join('');
-  }
-  document.getElementById('addVideoForm').addEventListener('submit',function(){
-    let list = JSON.parse(localStorage.getItem('video_gallery')||'null')||demoVideos;
-    if(videoAddMode==='youtube'){
-      let url = document.getElementById('videoUrlInput').value;
-      // format YouTube
-      let m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]+)/);
-      if(!m) {alert('Lien YouTube invalide');return;}
-      list.push({type:'youtube',url:`https://www.youtube.com/embed/${m[1]}`});
-    } else {
-      let file = document.getElementById('videoFileInput').files[0];
-      if(!file) {alert('Please select a video file'); return;}
-      let reader = new FileReader();
-      reader.onload = function(e){
-        list.push({type:'local',url:e.target.result});
-        localStorage.setItem('video_gallery',JSON.stringify(list));
-        renderVideos();
-        setTimeout(()=>alert('[Mock] Vidéo locale ajoutée !'),100);
-      }
-      reader.readAsDataURL(file);
-      return;
-    }
-    localStorage.setItem('video_gallery',JSON.stringify(list));
-    renderVideos();
-    setTimeout(()=>alert('[Mock] Vidéo YouTube ajoutée!'),100);
-    document.getElementById('videoUrlInput').value = '';
-    document.getElementById('videoFileInput').value = '';
-  });
-  // Suppression vidéo
-  document.getElementById('videoGallery').addEventListener('click',function(e){
-    if(e.target.classList.contains('remove-video-btn')){
-      let idx = +e.target.dataset.index, list = JSON.parse(localStorage.getItem('video_gallery')||'null')||demoVideos;
-      list.splice(idx,1); localStorage.setItem('video_gallery',JSON.stringify(list)); renderVideos();
-      setTimeout(()=>alert('[Mock] Vidéo supprimée !'),80);
-    }
-  });
-  // Switch mode ajout vidéo
-  document.querySelectorAll('.video-add-mode-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.video-add-mode-btn').forEach(x=>x.classList.remove('active'));
-      btn.classList.add('active');
-      videoAddMode=btn.dataset.mode;
-      document.getElementById('videoUrlInput').style.display = (videoAddMode==='youtube'?'block':'none');
-      document.getElementById('videoFileInput').style.display = (videoAddMode==='local'?'block':'none');
-    });
-  });
+<section id="coran">
+<h2 data-i18n="quran_title"></h2>
+<input type="text" data-i18n-placeholder="quran_search" onkeyup="searchSurah(this.value)">
+<div id="surahList" class="card"></div>
+<div id="ayahDisplay" class="card"></div>
+</section>
 
-  /********************
-   *    QIBLA COMPASS
-   ********************/
-  let qiblaUserLat = 0, qiblaUserLng = 0, qiblaAnimAngle = 0;
-  const MAKKAH_LAT = 21.4225, MAKKAH_LNG = 39.8262;
-  function deg2rad(d) { return d * Math.PI / 180; }
-  function getQiblaDirection(lat, lng) {
-    let phiK = deg2rad(MAKKAH_LAT),
-      lambdaK = deg2rad(MAKKAH_LNG),
-      phiU = deg2rad(lat), lambdaU = deg2rad(lng);
-    let y = Math.sin(lambdaK - lambdaU);
-    let x = Math.cos(phiU) * Math.tan(phiK) - Math.sin(phiU) * Math.cos(lambdaK - lambdaU);
-    let brng = Math.atan2(y, x);
-    return (brng * 180 / Math.PI + 360) % 360;
-  }
-  function renderQiblaSection(){
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos=>{
-        qiblaUserLat = pos.coords.latitude;
-        qiblaUserLng = pos.coords.longitude;
-        drawQiblaCompass(qiblaAnimAngle);
-        document.getElementById('qiblaDirectionInfo').innerHTML='<span>📍</span>'+formatCoord(qiblaUserLat)+', '+formatCoord(qiblaUserLng);
-      },err=>{
-        document.getElementById('qiblaDirectionInfo').innerText = '⛔️ Localisation refusée';
-        drawQiblaCompass(qiblaAnimAngle);
-      });
-    } else {
-      document.getElementById('qiblaDirectionInfo').innerText = '⛔️ Non supportée';
-      drawQiblaCompass(qiblaAnimAngle);
-    }
-  }
-  function formatCoord(n) {
-    return (Math.round(n*1000)/1000)+'';
-  }
-  function drawQiblaCompass(deviceAngle){
-    let ctx = document.getElementById('qiblaCanvas').getContext('2d');
-    ctx.clearRect(0,0,310,310);
-    // Cercle principal
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(155,155,135,0,2*Math.PI);
-    ctx.fillStyle = '#FFF'; ctx.shadowColor = '#ccc'; ctx.shadowBlur=10;
-    ctx.fill(); ctx.restore();
-    ctx.save();
-    // Qibla
-    let qiblaDeg = getQiblaDirection(qiblaUserLat||35.7, qiblaUserLng||-5.83);
-    let deviceNorth = -deviceAngle;
-    let arrowAngle = Math.PI/2 + deg2rad(qiblaDeg + deviceNorth);
-    ctx.translate(155,155);
-    ctx.rotate(arrowAngle);
-    // Flèche
-    ctx.beginPath();
-    ctx.moveTo(0,-95); ctx.lineTo(18,0); ctx.lineTo(-18,0);
-    ctx.closePath();
-    ctx.fillStyle = '#059669'; ctx.shadowBlur=7; ctx.shadowColor='#05966977';
-    ctx.fill(); ctx.strokeStyle = '#D4AF37'; ctx.lineWidth=5; ctx.stroke();
-    // Dôme sur la flèche
-    ctx.beginPath(); ctx.arc(0,-100,13,0,2*Math.PI);
-    ctx.fillStyle = '#D4AF37'; ctx.fill();
-    ctx.restore();
-    // Disque central
-    ctx.beginPath();
-    ctx.arc(155,155,27,0,2*Math.PI);
-    ctx.fillStyle = '#059669'; ctx.fill();
-    // Nord
-    ctx.save();ctx.translate(155,54);
-    ctx.beginPath(); ctx.arc(0,0,16,0,2*Math.PI); ctx.fillStyle = '#D4AF37'; ctx.fill();
-    ctx.font = 'bold 1.19em Rubik,Arial';ctx.textAlign='center'; ctx.fillStyle = '#FFF';
-    ctx.fillText('N',0,8);
-    ctx.restore();
-    ctx.save(); ctx.strokeStyle="#e3e3e3"; ctx.lineWidth=2;
-    for(let i=0;i<360;i+=30){
-      ctx.save(); ctx.translate(155,155);
-      ctx.rotate(i*Math.PI/180);
-      ctx.beginPath(); ctx.moveTo(0,-131); ctx.lineTo(0,-137); ctx.stroke();
-      ctx.restore();
-    }
-    ctx.restore();
-    // Angle
-    document.getElementById('qiblaDirectionInfo').innerHTML += ' | Qibla angle: <b>'+(Math.round(qiblaDeg*10)/10)+'°</b>';
-  }
-  // DeviceOrientation
-  window.addEventListener('deviceorientation',function(e){
-    if(typeof e.alpha==='number'){
-      qiblaAnimAngle = e.alpha;
-      drawQiblaCompass(qiblaAnimAngle);
-    }
-  });
+<section id="noms">
+<h2 data-i18n="names_title"></h2>
+<div id="namesList" class="card"></div>
+</section>
 
-  /*********************
-   *       COMPTE UTILISATEUR
-   *********************/
-  function renderAccount(){
-    let container = document.getElementById('accountContainer');
-    if(currentUser) {
-      // Mock profil
-      container.innerHTML = `<div class="account-profile-block">
-        <span style="font-size:2.3em;">👤</span>
-        <div style="margin:.42em 0 .3em 0; font-size:1.17em;font-weight:600;">${currentUser.name||'-'}</div>
-        <div><b>Email:</b> ${currentUser.email}</div>
-        <button class="logout-btn">${t('account.logout')}</button>
-      </div>`;
-      container.querySelector('.logout-btn').onclick = function(){
-        currentUser = null; localStorage.removeItem('logged_user'); renderAccount(); setTimeout(()=>alert('[Demo] Déconnecté'),70);
-      }
-    } else {
-      // Form login/signup
-      container.innerHTML = `<form class="user-account-form" id="loginForm">
-        <label for="loginEmail">${t('account.email')}</label>
-        <input id="loginEmail" type="email" required>
-        <label for="loginPwd">${t('account.pwd')}</label>
-        <input id="loginPwd" type="password" required>
-        <button type="submit">${t('account.login')}</button>
-        <div style="margin:.7em 0;border-bottom:1px solid #f3bc59;" ></div>
-        <label for="signupName">${t('account.name')}</label>
-        <input id="signupName" type="text">
-        <label for="signupEmail">${t('account.email')}</label>
-        <input id="signupEmail" type="email" >
-        <label for="signupPwd">${t('account.pwd')}</label>
-        <input id="signupPwd" type="password">
-        <button type="button" id="signupBtn">${t('account.signup')}</button>
-      </form>`;
-      document.getElementById('loginForm').onsubmit = function(e){e.preventDefault();
-        let email = document.getElementById('loginEmail').value;
-        let pwd = document.getElementById('loginPwd').value;
-        // Mock login
-        let user = JSON.parse(localStorage.getItem('logged_user')||'null');
-        if(user && user.email==email && user.pwd==pwd){
-          currentUser=user; renderAccount(); setTimeout(()=>alert('[Mock] Connexion réussie!'),90);
-        } else {
-          alert('[Demo] Compte inconnu, créez un compte plus bas!');
-        }
-      };
-      document.getElementById('signupBtn').onclick = function(){
-        let name = document.getElementById('signupName').value,
-            email = document.getElementById('signupEmail').value,
-            pwd = document.getElementById('signupPwd').value;
-        if (!email || !pwd || !name) return alert('[Demo] Merci de remplir tous les champs pour vous inscrire.');
-        let user = {name,email,pwd};
-        localStorage.setItem('logged_user', JSON.stringify(user));
-        currentUser = user; renderAccount(); setTimeout(()=>alert('[Mock] Inscription réussie !'),90);
-      }
-    }
-  }
-  // Init (mocked session)
-  (function(){
-    let lu = JSON.parse(localStorage.getItem('logged_user')||'null');
-    if(lu) currentUser = lu;
-  })();
+<section id="tasbih">
+<h2 data-i18n="tasbih_title"></h2>
+<div class="card">
+<h3 id="counter">0</h3>
+<button onclick="increment()">+1</button>
+<button onclick="resetCounter()">Reset</button>
+</div>
+</section>
 
-  /************
-   * --- NAVBAR labels refresh on lang
-   ************/
-  function renderNavbarLabels(){
-    document.querySelectorAll('.nav-label').forEach(el=>{
-      el.innerText = t(el.closest('.nav-btn').dataset.nav==='home'?('nav.home'):'nav.'+el.closest('.nav-btn').dataset.nav);
-    });
-  }
+<section id="mosquees">
+<h2 data-i18n="mosque_title"></h2>
+<div id="map"></div>
+</section>
 
-  /*****************
-   *    INITIALISATION
-   *****************/
-  function initApp() {
-    setLang(appLang);
-    handleHash();
-    renderQuranVerses();
-    renderAzkar();
-    renderReminders();
-    renderVideos();
-    renderAccount();
-  }
-  document.addEventListener('DOMContentLoaded', function() {
-    applyTranslations();
-    renderQuranVerses();
-    renderAzkar();
-    renderReminders();
-    renderVideos();
-    renderAccount();
-    updateWelcomeQuote();
-    renderNavbarLabels();
-    // Page spécifiques
-    renderPrayerTimesSection();
-    renderQiblaSection();
-    // NAVBAR burger
-    document.addEventListener('click', function(e) {
-      if(e.target.matches('.nav-btn')||e.target.closest('.nav-btn')) document.getElementById('mainNavbar').classList.remove('menu-open');
-    })
-  });
-  window.addEventListener('hashchange', function(){
-    handleHash();
-    setTimeout(()=>{
-      if(location.hash=='#prayer') renderPrayerTimesSection();
-      if(location.hash=='#qibla') renderQiblaSection();
-    },140);
-  });
+<section id="membre">
+<h2 data-i18n="member_title"></h2>
+<div class="card">
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button onclick="register()">Inscription</button>
+<button onclick="login()">Connexion</button>
+<p id="status"></p>
+</div>
+</section>
 
-  // ------- END JS -------
-  </script>
+<footer>
+<p data-i18n="footer_text"></p>
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+function toggleMenu(){document.getElementById("nav").classList.toggle("active");}
+function toggleDark(){document.body.classList.toggle("dark");}
+
+/* ===== PRIERE ===== */
+function getPrayerTimes(){
+navigator.geolocation.getCurrentPosition(pos=>{
+fetch(`https://api.aladhan.com/v1/timings?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&method=2`)
+.then(res=>res.json())
+.then(data=>{
+let t=data.data.timings;
+let lang = localStorage.getItem("lang") || "fr";
+
+document.getElementById("prayerTimes").innerHTML=
+`${translations[lang].prayer_fajr}: ${t.Fajr}<br>
+${translations[lang].prayer_dhuhr}: ${t.Dhuhr}<br>
+${translations[lang].prayer_asr}: ${t.Asr}<br>
+${translations[lang].prayer_maghrib}: ${t.Maghrib}<br>
+${translations[lang].prayer_isha}: ${t.Isha}`;
+});
+});
+}
+
+/* ===== CORAN ===== */
+fetch("https://api.alquran.cloud/v1/surah")
+.then(res=>res.json())
+.then(data=>{
+window.allSurahs=data.data;
+displaySurahs(window.allSurahs);
+});
+
+function displaySurahs(list){
+document.getElementById("surahList").innerHTML=
+list.map(s=>`<p style="cursor:pointer" onclick="loadSurah(${s.number})">${s.number}. ${s.englishName}</p>`).join("");
+}
+
+function searchSurah(val){
+let filtered=window.allSurahs.filter(s=>s.englishName.toLowerCase().includes(val.toLowerCase()));
+displaySurahs(filtered);
+}
+
+function loadSurah(num){
+fetch(`https://api.alquran.cloud/v1/surah/${num}/editions/quran-uthmani,en.asad,fr.hamidullah`)
+.then(res=>res.json())
+.then(data=>{
+let arabic=data.data[0].ayahs;
+let english=data.data[1].ayahs;
+let french=data.data[2].ayahs;
+
+document.getElementById("ayahDisplay").innerHTML=
+arabic.map((a,i)=>
+`<div class="ayah">
+<strong>${a.numberInSurah}</strong><br>
+${a.text}<br>
+<em>${english[i].text}</em><br>
+<small>${french[i].text}</small>
+</div>`
+).join("");
+});
+}
+
+/* ===== 99 NOMS ===== */
+const names = {
+fr: [
+"Ar-Rahman","Ar-Rahim","Al-Malik","Al-Quddus","As-Salam","Al-Mu'min","Al-Muhaymin",
+"Al-Aziz","Al-Jabbar","Al-Mutakabbir","Al-Khaliq","Al-Bari","Al-Musawwir",
+"Al-Ghaffar","Al-Qahhar","Al-Wahhab","Ar-Razzaq","Al-Fattah","Al-Alim",
+"Al-Qabid","Al-Basit","Al-Khafid","Ar-Rafi","Al-Mu'izz","Al-Mudhill",
+"As-Sami","Al-Basir","Al-Hakam","Al-Adl","Al-Latif","Al-Khabir",
+"Al-Halim","Al-Azim","Al-Ghafur","Ash-Shakur","Al-Ali","Al-Kabir",
+"Al-Hafiz","Al-Muqit","Al-Hasib","Al-Jalil","Al-Karim","Ar-Raqib",
+"Al-Mujib","Al-Wasi","Al-Hakim","Al-Wadud","Al-Majid","Al-Ba'ith",
+"Ash-Shahid","Al-Haqq","Al-Wakil","Al-Qawi","Al-Matin","Al-Wali",
+"Al-Hamid","Al-Muhsi","Al-Mubdi","Al-Mu'id","Al-Muhyi","Al-Mumit",
+"Al-Hayy","Al-Qayyum","Al-Wajid","Al-Majid","Al-Wahid","As-Samad",
+"Al-Qadir","Al-Muqtadir","Al-Muqaddim","Al-Mu'akhkhir","Al-Awwal",
+"Al-Akhir","Az-Zahir","Al-Batin","Al-Wali","Al-Muta'ali","Al-Barr",
+"At-Tawwab","Al-Muntaqim","Al-Afuw","Ar-Ra'uf","Malik-ul-Mulk",
+"Dhul-Jalali-wal-Ikram","Al-Muqsit","Al-Jami","Al-Ghani","Al-Mughni",
+"Al-Mani","Ad-Darr","An-Nafi","An-Nur","Al-Hadi","Al-Badi",
+"Al-Baqi","Al-Warith","Ar-Rashid","As-Sabur"
+],
+
+en: [ /* même translittération que FR */
+"Ar-Rahman","Ar-Rahim","Al-Malik","Al-Quddus","As-Salam","Al-Mu'min","Al-Muhaymin",
+"Al-Aziz","Al-Jabbar","Al-Mutakabbir","Al-Khaliq","Al-Bari","Al-Musawwir",
+"Al-Ghaffar","Al-Qahhar","Al-Wahhab","Ar-Razzaq","Al-Fattah","Al-Alim",
+"Al-Qabid","Al-Basit","Al-Khafid","Ar-Rafi","Al-Mu'izz","Al-Mudhill",
+"As-Sami","Al-Basir","Al-Hakam","Al-Adl","Al-Latif","Al-Khabir",
+"Al-Halim","Al-Azim","Al-Ghafur","Ash-Shakur","Al-Ali","Al-Kabir",
+"Al-Hafiz","Al-Muqit","Al-Hasib","Al-Jalil","Al-Karim","Ar-Raqib",
+"Al-Mujib","Al-Wasi","Al-Hakim","Al-Wadud","Al-Majid","Al-Ba'ith",
+"Ash-Shahid","Al-Haqq","Al-Wakil","Al-Qawi","Al-Matin","Al-Wali",
+"Al-Hamid","Al-Muhsi","Al-Mubdi","Al-Mu'id","Al-Muhyi","Al-Mumit",
+"Al-Hayy","Al-Qayyum","Al-Wajid","Al-Majid","Al-Wahid","As-Samad",
+"Al-Qadir","Al-Muqtadir","Al-Muqaddim","Al-Mu'akhkhir","Al-Awwal",
+"Al-Akhir","Az-Zahir","Al-Batin","Al-Wali","Al-Muta'ali","Al-Barr",
+"At-Tawwab","Al-Muntaqim","Al-Afuw","Ar-Ra'uf","Malik-ul-Mulk",
+"Dhul-Jalali-wal-Ikram","Al-Muqsit","Al-Jami","Al-Ghani","Al-Mughni",
+"Al-Mani","Ad-Darr","An-Nafi","An-Nur","Al-Hadi","Al-Badi",
+"Al-Baqi","Al-Warith","Ar-Rashid","As-Sabur"
+],
+
+ar: [
+"الرحمن","الرحيم","الملك","القدوس","السلام","المؤمن","المهيمن",
+"العزيز","الجبار","المتكبر","الخالق","البارئ","المصور",
+"الغفار","القهار","الوهاب","الرزاق","الفتاح","العليم",
+"القابض","الباسط","الخافض","الرافع","المعز","المذل",
+"السميع","البصير","الحكم","العدل","اللطيف","الخبير",
+"الحليم","العظيم","الغفور","الشكور","العلي","الكبير",
+"الحفيظ","المقيت","الحسيب","الجليل","الكريم","الرقيب",
+"المجيب","الواسع","الحكيم","الودود","المجيد","الباعث",
+"الشهيد","الحق","الوكيل","القوي","المتين","الولي",
+"الحميد","المحصي","المبدئ","المعيد","المحيي","المميت",
+"الحي","القيوم","الواجد","الماجد","الواحد","الصمد",
+"القادر","المقتدر","المقدم","المؤخر","الأول",
+"الآخر","الظاهر","الباطن","الوالي","المتعالي","البر",
+"التواب","المنتقم","العفو","الرؤوف","مالك الملك",
+"ذو الجلال والإكرام","المقسط","الجامع","الغني","المغني",
+"المانع","الضار","النافع","النور","الهادي","البديع",
+"الباقي","الوارث","الرشيد","الصبور"
+]
+};
+
+function displayNames(){
+let lang = localStorage.getItem("lang") || "fr";
+
+document.getElementById("namesList").innerHTML =
+names[lang].map(n => "<p>"+n+"</p>").join("");
+}
+
+/* ===== TASBIH ===== */
+let count=localStorage.getItem("tasbih")||0;
+document.getElementById("counter").innerText=count;
+function increment(){count++;localStorage.setItem("tasbih",count);document.getElementById("counter").innerText=count;}
+function resetCounter(){count=0;localStorage.setItem("tasbih",0);document.getElementById("counter").innerText=0;}
+
+/* ===== MAP ===== */
+navigator.geolocation.getCurrentPosition(pos=>{
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+let map = L.map('map').setView([lat, lon], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+.addTo(map);
+
+let userIcon = L.icon({
+iconUrl:'https://cdn-icons-png.flaticon.com/512/64/64113.png',
+iconSize:[30,30]
+});
+
+let mosqueIcon = L.icon({
+iconUrl:'https://cdn-icons-png.flaticon.com/512/3179/3179068.png',
+iconSize:[30,30]
+});
+
+L.marker([lat,lon],{icon:userIcon})
+.addTo(map)
+.bindPopup("📍 Vous êtes ici");
+
+L.circle([lat,lon],{
+radius:3000,
+color:'#d4af37',
+fillOpacity:0.1
+}).addTo(map);
+
+const query = `
+[out:json];
+node
+["amenity"="place_of_worship"]
+["religion"="muslim"]
+(around:3000,${lat},${lon});
+out;
+`;
+
+fetch("https://overpass-api.de/api/interpreter", {
+method: "POST",
+body: query
+})
+.then(res => res.json())
+.then(data => {
+data.elements.forEach(m => {
+L.marker([m.lat, m.lon], {icon: mosqueIcon})
+.addTo(map)
+.bindPopup(`
+<strong>${m.tags.name || "Mosquée"}</strong><br>
+<a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lon}">
+🧭 Itinéraire
+</a>
+`);
+});
+})
+.catch(err=>{
+console.log("Erreur mosquées :", err);
+});
+
+}); // ← CETTE LIGNE MANQUAIT
+
+/* ===== MEMBRE ===== */
+function register(){
+localStorage.setItem(email.value,password.value);
+status.innerText="Compte créé";
+}
+function login(){
+if(localStorage.getItem(email.value)===password.value){
+status.innerText="Connexion réussie";
+}else{
+status.innerText="Erreur";
+}
+}
+
+/* ===== MULTILINGUE ===== */
+const translations = {
+fr:{
+nav_home:"Accueil",
+nav_presentation:"Islam",
+nav_azkar:"Azkar",
+nav_versets:"Versets",
+nav_prayer:"Prière",
+nav_quran:"Coran",
+nav_names:"99 Noms",
+nav_tasbih:"Tasbih",
+nav_mosque:"Mosquées",
+nav_member:"Espace",
+
+hero_title:"Découvrir l'Islam",
+hero_sub:"Explorez la religion musulmane de A à Z",
+
+presentation_title:"Présentation de l'Islam",
+presentation_text:"L’Islam est une religion monothéiste fondée sur le Coran et la Sunna.",
+
+azkar_title:"Azkar Quotidiens",
+verset_title:"Verset Important",
+verset_text:"Allah ! Point de divinité à part Lui, le Vivant, Celui qui subsiste par Lui-même...",
+
+prayer_title:"Horaire de Prière",
+prayer_button:"Obtenir horaires",
+prayer_fajr:"Fajr",
+prayer_dhuhr:"Dhuhr",
+prayer_asr:"Asr",
+prayer_maghrib:"Maghrib",
+prayer_isha:"Isha",
+
+
+quran_title:"Coran Complet",
+quran_search:"Rechercher une sourate...",
+
+names_title:"99 Noms d'Allah",
+
+tasbih_title:"Compteur Tasbih",
+tasbih_reset:"Réinitialiser",
+
+mosque_title:"Mosquées proches",
+
+member_title:"Espace Membre",
+member_email:"Email",
+member_password:"Mot de passe",
+member_register:"Inscription",
+member_login:"Connexion",
+
+footer_text:"Plateforme Islamique Complète"
+},
+
+en:{
+nav_home:"Home",
+nav_presentation:"Islam",
+nav_azkar:"Azkar",
+nav_versets:"Verses",
+nav_prayer:"Prayer",
+nav_quran:"Quran",
+nav_names:"99 Names",
+nav_tasbih:"Tasbih",
+nav_mosque:"Mosques",
+nav_member:"Member",
+
+hero_title:"Discover Islam",
+hero_sub:"Explore Islam from A to Z",
+
+presentation_title:"About Islam",
+presentation_text:"Islam is a monotheistic religion based on the Quran and Sunnah.",
+
+azkar_title:"Daily Azkar",
+verset_title:"Important Verse",
+verset_text:"Allah! There is no deity except Him, the Ever-Living...",
+
+prayer_title:"Prayer Times",
+prayer_button:"Get Prayer Times",
+prayer_fajr:"Fajr",
+prayer_dhuhr:"Dhuhr",
+prayer_asr:"Asr",
+prayer_maghrib:"Maghrib",
+prayer_isha:"Isha",
+
+
+quran_title:"Complete Quran",
+quran_search:"Search a Surah...",
+
+names_title:"99 Names of Allah",
+
+tasbih_title:"Tasbih Counter",
+tasbih_reset:"Reset",
+
+mosque_title:"Nearby Mosques",
+
+member_title:"Member Area",
+member_email:"Email",
+member_password:"Password",
+member_register:"Register",
+member_login:"Login",
+
+footer_text:"Complete Islamic Platform"
+},
+
+ar:{
+nav_home:"الرئيسية",
+nav_presentation:"الإسلام",
+nav_azkar:"الأذكار",
+nav_versets:"آيات",
+nav_prayer:"الصلاة",
+nav_quran:"القرآن",
+nav_names:"أسماء الله الحسنى",
+nav_tasbih:"السبحة",
+nav_mosque:"المساجد",
+nav_member:"حسابي",
+
+hero_title:"اكتشف الإسلام",
+hero_sub:"استكشف الدين الإسلامي من الألف إلى الياء",
+
+presentation_title:"نبذة عن الإسلام",
+presentation_text:"الإسلام دين توحيدي يقوم على القرآن والسنة.",
+
+azkar_title:"الأذكار اليومية",
+verset_title:"آية مهمة",
+verset_text:"اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ...",
+
+prayer_title:"مواقيت الصلاة",
+prayer_button:"عرض المواقيت",
+prayer_fajr:"الفجر",
+prayer_dhuhr:"الظهر",
+prayer_asr:"العصر",
+prayer_maghrib:"المغرب",
+prayer_isha:"العشاء",
+
+quran_title:"القرآن الكريم",
+quran_search:"ابحث عن سورة...",
+
+names_title:"أسماء الله الحسنى",
+
+tasbih_title:"عداد التسبيح",
+tasbih_reset:"إعادة التعيين",
+
+mosque_title:"المساجد القريبة",
+
+member_title:"منطقة الأعضاء",
+member_email:"البريد الإلكتروني",
+member_password:"كلمة المرور",
+member_register:"تسجيل",
+member_login:"دخول",
+
+footer_text:"منصة إسلامية متكاملة"
+}
+};
+
+
+function changeLanguage(lang){
+
+localStorage.setItem("lang",lang);
+document.documentElement.lang=lang;
+document.body.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+el.innerText=translations[lang][el.dataset.i18n];
+});
+
+/* Traduction placeholders */
+document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+el.placeholder = translations[lang][el.dataset.i18nPlaceholder];
+});
+
+/* Traduction boutons */
+document.querySelector("#membre button:nth-child(3)").innerText =
+translations[lang].member_register;
+
+document.querySelector("#membre button:nth-child(4)").innerText =
+translations[lang].member_login;
+
+document.querySelector("#tasbih button:nth-child(3)").innerText =
+translations[lang].tasbih_reset;
+
+displayNames();
+
+}
+
+
+changeLanguage(localStorage.getItem("lang")||"fr");
+
+
+
+async function hashPassword(password){
+const encoder = new TextEncoder();
+const data = encoder.encode(password);
+const hash = await crypto.subtle.digest("SHA-256", data);
+return Array.from(new Uint8Array(hash))
+.map(b => b.toString(16).padStart(2, "0"))
+.join("");
+}
+
+async function register(){
+if(!email.value || !password.value){
+status.innerText="Champs requis";
+return;
+}
+const hashed = await hashPassword(password.value);
+localStorage.setItem(email.value, hashed);
+status.innerText="Compte sécurisé créé";
+}
+
+async function login(){
+const stored = localStorage.getItem(email.value);
+const hashed = await hashPassword(password.value);
+
+if(stored && stored === hashed){
+localStorage.setItem("session", email.value);
+status.innerText="Connexion réussie";
+}else{
+status.innerText="Identifiants incorrects";
+}
+}
+
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");
+}
+});
+});
+document.querySelectorAll("section").forEach(sec=>observer.observe(sec));
+
+if(localStorage.getItem("surahs")){
+window.allSurahs=JSON.parse(localStorage.getItem("surahs"));
+displaySurahs(window.allSurahs);
+}else{
+fetch("https://api.alquran.cloud/v1/surah")
+.then(res=>res.json())
+.then(data=>{
+window.allSurahs=data.data;
+localStorage.setItem("surahs",JSON.stringify(data.data));
+displaySurahs(window.allSurahs);
+});
+}
+
+
+
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js");
+}
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBFksbIvxVZIFc3g3AA8uKGivM17LLZSPY",
+  authDomain: "sakina-42d15.firebaseapp.com",
+  projectId: "sakina-42d15",
+  storageBucket: "sakina-42d15.firebasestorage.app",
+  messagingSenderId: "649015700790",
+  appId: "1:649015700790:web:bf7898f6487db44c7ed797"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const status = document.getElementById("status");
+
+window.register = function(){
+createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+.then(()=>{
+status.innerText = "Compte créé avec succès";
+})
+.catch(error=>{
+status.innerText = error.message;
+});
+}
+
+window.login = function(){
+signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+.then(()=>{
+status.innerText = "Connexion réussie";
+})
+.catch(error=>{
+status.innerText = error.message;
+});
+}
+
+</script>
+
+
+
 </body>
 </html>
